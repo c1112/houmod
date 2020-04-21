@@ -23,21 +23,21 @@ def worldTransform(node, channel):
 
     return trans
 
+def create_linked_camera():
+    #Source Camera
+    source_camera = hou.selectedNodes()[0]
+    source_focalLength = source_camera.parm('focal')
+    source_aperture = source_camera.parm('aperture')
 
-#Source Camera
-source_camera = hou.selectedNodes()[0]
-source_focalLength = source_camera.parm('focal')
-source_aperture = source_camera.parm('aperture')
+    #Destionation Camera
+    dest_camera = hou.node('/obj').createNode('cam')
+    dest_camera.setName("renderCam")
 
-#Destionation Camera
-dest_camera = hou.node('/obj').createNode('cam')
-dest_camera.setName("renderCam")
-
-dest_focalLength = dest_camera.parm('focal').set(source_focalLength)
-dest_aperture = dest_camera.parm('aperture').set(source_aperture)
-#set the world transform
-for t in ["tx", "ty", "tz"]:
-    dest_transform = dest_camera.parm(t).setExpression(worldTransform(source_camera, t))
-#set the world rotation
-for r in ["rx", "ry", "rz"]:
-    dest_rot = dest_camera.parm(r).setExpression(worldTransform(source_camera, r))
+    dest_focalLength = dest_camera.parm('focal').set(source_focalLength)
+    dest_aperture = dest_camera.parm('aperture').set(source_aperture)
+    #set the world transform
+    for t in ["tx", "ty", "tz"]:
+        dest_transform = dest_camera.parm(t).setExpression(worldTransform(source_camera, t))
+    #set the world rotation
+    for r in ["rx", "ry", "rz"]:
+        dest_rot = dest_camera.parm(r).setExpression(worldTransform(source_camera, r))

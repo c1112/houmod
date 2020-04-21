@@ -1,3 +1,5 @@
+import hou
+
 def extract_groups(selected_nodes):
     '''Create objects using target object primitive groups.'''
 
@@ -17,15 +19,7 @@ def extract_groups(selected_nodes):
             merge.parm('objpath1').set("%s/%s" % (node.path(), "OUT"))
             merge.parm('group1').set(group.name())
 
-            #xform = merge.createOutputNode('xform')
-            #xform.setDisplayFlag(True)
-            #xform.setRenderFlag(True)
-
-            #t = xform.parmTuple('t')
-            #t[0].setExpression('-centroid(opinputpath(".", 0), 0)')
-            #t[1].setExpression('-centroid(opinputpath(".", 0), 1)')
-            #t[2].setExpression('-centroid(opinputpath(".", 0), 2)')
-
-            #obj.parmTuple('t').set([-x for x in t.eval()])
-
-extract_groups(hou.selectedNodes())
+            null = merge.createOutputNode('null')
+            null.setDisplayFlag(True)
+            null.setRenderFlag(True)
+            
